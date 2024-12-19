@@ -48,11 +48,11 @@ private fun placeExecutableBlock(loaderBlockId: Int, executableBlockId: String, 
 }
 ```
 
-### Issue 2
-There is an issue that compromises the plugin's functionality: the block is not generated based on the player's position. This results in the block being placed in a different position than intended.
-
 ![img](https://i.imgur.com/FJT8sTB.png)
-- A significant issue arises when the plugin handles **ItemsAdder** items that generate composite structures, such as a 2x2 structure (four blocks), as shown in the image. When a player interacts with one of these blocks in the world, the standard `BlockPlaceEvent` is triggered, as well as the `BlockPlace` event from **ExecutableBlocks**. However, because this is a multi-block structure, **ExecutableBlocks** stores each of the four blocks individually, both in its files and plugin cache.
+- There is an issue that compromises the plugin's functionality: the block is not generated based on the player's position. This results in the block being placed in a different position than intended.
+
+### Issue 2
+A significant issue arises when the plugin handles **ItemsAdder** items that generate composite structures, such as a 2x2 structure (four blocks), as shown in the image. When a player interacts with one of these blocks in the world, the standard `BlockPlaceEvent` is triggered, as well as the `BlockPlace` event from **ExecutableBlocks**. However, because this is a multi-block structure, **ExecutableBlocks** stores each of the four blocks individually, both in its files and plugin cache.
 
 If the `<ExecutableBlock>.place()` method is called four times, it triggers the block creation event for **ItemsAdder** four times, leading to the duplication of the structure. Instead of generating a cohesive structure (four interactive blocks), the plugin creates multiple overlapping structures, as shown in the image below:
 
