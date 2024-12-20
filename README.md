@@ -59,7 +59,7 @@ If the `<ExecutableBlock>.place()` method is called four times, it triggers the 
 ![img_2](https://i.imgur.com/Be8uKP6.png)
 - In this scenario, the `place` method is invoked for each position stored by **ExecutableBlocks**. However, under normal plugin behavior, it does not generate new blocks; it only loads previously stored data. As a result, duplication issues only occur when blocks are manually inserted during the loading process.
 
-![IMAGE 3](https://i.imgur.com/Q63AxeY.gif)
+[IMAGE 3](https://i.imgur.com/Q63AxeY.gif)
 - It's essential preserve interaction across all blocks in the structure, as maintaining interaction on only one block is neither logical nor functional.
 
 
