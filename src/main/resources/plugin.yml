@@ -4,6 +4,6 @@ description: "Load custom blocks/entities in skyblock or any context like this"
 version: 1.0.1
 main: com.markineo.loader.Loader
 api-version: 1.21
-softdepend: [ "Citizens", "ExecutableBlocks", "NBTAPI", "ItemsAdder", "HeadDatabase" ]
+softdepend: [ "Citizens", "ExecutableBlocks", "hSkyBlock", "ItemsAdder", "HeadDatabase" ]
 commands:
   mloader:

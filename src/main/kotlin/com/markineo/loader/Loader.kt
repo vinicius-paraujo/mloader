@@ -1,6 +1,7 @@
 package com.markineo.loader
 
 import com.markineo.loader.apis.ExecutableBlocksAPI
+import com.markineo.loader.blocks.BlocksManager
 import com.markineo.loader.util.FileManager
 import com.markineo.loader.util.DatabaseManager
 import com.markineo.loader.util.DatabaseManager.setupDatabase
@@ -46,6 +47,11 @@ class Loader : JavaPlugin() {
         }
 
         logger.info("Desenvolvido por: Markineo. Versão: ${instance.pluginMeta.version}")
+    }
+
+    override fun onDisable() {
+        ExecutableBlocksAPI.clearFiles()
+        logger.info("Plugin desativado.")
     }
 
     private fun checkDependencies() {

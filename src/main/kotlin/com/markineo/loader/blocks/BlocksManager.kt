@@ -17,11 +17,10 @@ object BlocksManager {
         logger.info(playerLocationSerialized)
 
         DatabaseManager.getConnection().use { connection ->
-            // Inicia uma transação para garantir atomicidade
             connection.autoCommit = false
 
             try {
-                // 1. Inserção ou atualização na tabela 'eb_blocks'
+                // Insert block data
                 val queryEbBlocks = """
                 INSERT INTO eb_blocks (world_name, position_serialized, block_id)
                 VALUES (?, ?, ?)
@@ -36,34 +35,19 @@ object BlocksManager {
                     statement.executeUpdate()
                 }
 
-                // 2. Inserção ou atualização na tabela 'loader_entities'
-                val queryLoaderEntities = """
-                INSERT INTO loader_entities (loader_block_id, target_position_serialized)
-                VALUES ((SELECT loader_block_id FROM eb_blocks WHERE world_name = ? AND position_serialized = ?), ?)
-                ON DUPLICATE KEY UPDATE target_position_serialized = VALUES(target_position_serialized);
-            """.trimIndent()
-
-                connection.prepareStatement(queryLoaderEntities).use { statement ->
-                    statement.setString(1, world.name)
-                    statement.setString(2, serializeLocation(blockLocation))
-                    statement.setString(3, playerLocationSerialized)
-
-                    statement.executeUpdate()
-                }
-
-                // Commit das alterações após ambos os updates
                 connection.commit()
             } catch (e: Exception) {
-                // Em caso de erro, realiza rollback
                 connection.rollback()
                 e.printStackTrace()
             } finally {
-                // Restaura o autoCommit para o valor original
                 connection.autoCommit = true
             }
         }
     }
 
+    /**
+     * Serialize location to a JSON string
+     */
     fun serializeLocation(location: Location): String {
         val locationMap = location.serialize()
         val jsonObject = JSONObject(locationMap)

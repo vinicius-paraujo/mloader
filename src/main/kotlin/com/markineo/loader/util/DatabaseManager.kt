@@ -99,15 +99,6 @@ object DatabaseManager {
             );
             """.trimIndent()
             statement.executeUpdate(tableEbBlocks)
-
-            val tableLoaderEntities = """
-            CREATE TABLE IF NOT EXISTS loader_entities (
-                loader_block_id INT NOT NULL,
-                target_position_serialized VARCHAR(200) NOT NULL,
-                FOREIGN KEY (loader_block_id) REFERENCES eb_blocks(loader_block_id)
-            );
-            """.trimIndent()
-            statement.executeUpdate(tableLoaderEntities)
         }
     }
 
